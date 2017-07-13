@@ -1,0 +1,35 @@
+{
+  "name": "aad-apps-catalog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint src && preact test",
+    "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+    "build": "preact build",
+    "serve": "preact build && preact serve",
+    "dev": "preact watch"
+  },
+  "keywords": [],
+  "author": "Jesus Espejo <jespejo@externos.bankia.com>",
+  "license": "ISC",
+  "eslintConfig": {
+    "extends": "eslint-config-synacor"
+  },
+  "devDependencies": {
+    "eslint": "^4.1.1",
+    "eslint-config-synacor": "^1.0.1",
+    "if-env": "^1.0.0",
+    "preact-cli": "^1.3.0"
+  },
+  "dependencies": {
+    "feather-icons": "^3.1.0",
+    "material-ui": "^0.18.6",
+    "preact": "^8.1.0",
+    "preact-compat": "^3.16.0",
+    "preact-router": "^2.5.2",
+    "preact-tap-event-plugin": "^0.1.2",
+    "react-svg-inline": "^2.0.0",
+    "styletron-preact": "^2.5.7"
+  }
+}
