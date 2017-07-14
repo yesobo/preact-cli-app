@@ -11,7 +11,9 @@ export default class StashAnalysisFieldset extends Component {
     this.fields = [ 
       'comments'
     ]
-    this.fields.forEach( (fieldname) => this.state[fieldname] = null)
+    this.fields.forEach( (fieldname) =>
+      this.state[fieldname] =
+        this.props.fieldValues[fieldname]?this.props.fieldValues[fieldname]:null)
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.saveAndContinue = this.saveAndContinue.bind(this);
@@ -47,10 +49,12 @@ export default class StashAnalysisFieldset extends Component {
       <fieldset>
           <div className="form-group">
             <TextField
+              name={this.fields[0]}
               hintText=""
               floatingLabelText="Observaciones"
               multiLine={true}
-              rows={2}
+              rows={4}
+              onChange={this.handleInputChange}
             />
         </div>
         <RaisedButton

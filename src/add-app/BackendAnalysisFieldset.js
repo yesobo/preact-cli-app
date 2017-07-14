@@ -25,11 +25,26 @@ export default class BackendAnalysisFieldset extends Component {
       'archetyped',
       'newarchetype' ]
 
-    this.fields.forEach( (fieldname) => this.state[fieldname] = null)
+    this.fields.forEach( (fieldname) =>
+      this.state[fieldname] = this.props.fieldValues[fieldname] || this.customInitialValue(fieldname))
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.saveAndContinue = this.saveAndContinue.bind(this);
     this.previousStep = this.previousStep.bind(this);
+  }
+
+  customInitialValue(fieldsNameArr) {
+    // Checkboxes to false, null the rest
+    switch (fieldsNameArr) {
+      case this.fields[1]:
+        return false;
+        break;
+      case this.fields[2]:
+        return false;
+        break;
+      default:
+        return null;
+    }
   }
 
   handleInputChange(event) {
@@ -63,20 +78,22 @@ export default class BackendAnalysisFieldset extends Component {
           {/* Text input*/}
           <div className="form-group">
             <TextField
-              name="assemblyfoldername"
+              name={this.fields[0]}
               hintText="Nombre carpeta assembly"
               floatingLabelText="Assembly"
+              onChange={this.handleInputChange}
             />
           </div>              
           <div className="form-group"
             style={styles.block}>
             <Checkbox
-              name="archetyped"
+              name={this.fields[1]}
               checkedIcon={CheckIcon}
               uncheckedIcon={XIcon}
               label="Utiliza arquetipo (modulos)"
               labelPosition="left"
               style={styles.checkbox}
+              onCheck={this.handleInputChange}
             />
           </div>
           {/* Prepended checkbox */}
@@ -89,6 +106,7 @@ export default class BackendAnalysisFieldset extends Component {
               label="Arquetipo actual"
               labelPosition="left"
               style={styles.checkbox}
+              onCheck={this.handleInputChange}
             />
           </div>
           <RaisedButton

@@ -22,23 +22,21 @@ export default class AddAppForm extends Component {
     super();
     this.state = { 
       step: 0,
-      repotype: '',
       buildTools: [],
       depTools: []
     }
 
+    this.fieldValues = {};
+
     this.nextStep = this.nextStep.bind(this);
     this.previousStep = this.previousStep.bind(this);
+    this.saveValues = this.saveValues.bind(this);
   }
 
-  handleChange(event, index, value) { this.setState({repotype: value}) };
-  handleBuildToolChange(event, index, value) {this.setState({buildTools: value})};
-  handleDepToolChange(event, index, value) {this.setState({depTools: value})};
-
   saveValues(fields) {
-    return function() {
-      fieldValues = Object.assign({}, fieldValues, fields)
-    }()
+    console.log(`Values previous assignment is ${JSON.stringify(this.fieldValues)}`)
+    this.fieldValues = Object.assign({}, this.fieldValues, fields)
+    console.log(`Values updated to ${JSON.stringify(this.fieldValues)}`)
   }
 
   nextStep() {
@@ -59,7 +57,7 @@ export default class AddAppForm extends Component {
       <Step>
         <StepLabel>Stash project</StepLabel>
         <StepContent>
-          <ProjectFieldset fieldValues={fieldValues}
+          <ProjectFieldset fieldValues={this.fieldValues}
                                   nextStep={this.nextStep}
                                   saveValues={this.saveValues}/>
         </StepContent>
@@ -67,7 +65,7 @@ export default class AddAppForm extends Component {
       <Step>
         <StepLabel>Stash repository</StepLabel>
         <StepContent>
-          <RepoFieldset fieldValues={fieldValues}
+          <RepoFieldset fieldValues={this.fieldValues}
                               nextStep={this.nextStep}
                               previousStep={this.previousStep}
                               saveValues={this.saveValues}/>
@@ -76,7 +74,7 @@ export default class AddAppForm extends Component {
       <Step>
         <StepLabel>Stash Analysis</StepLabel>
         <StepContent>
-          <StashAnalysisFieldset fieldValues={fieldValues}
+          <StashAnalysisFieldset fieldValues={this.fieldValues}
                                         nextStep={this.nextStep}
                                         previousStep={this.previousStep}
                                         saveValues={this.saveValues}/>
@@ -85,7 +83,7 @@ export default class AddAppForm extends Component {
       <Step>
         <StepLabel>Backend Analysis</StepLabel>
         <StepContent>
-          <BackendAnalysisFieldset fieldValues={fieldValues}
+          <BackendAnalysisFieldset fieldValues={this.fieldValues}
                                           nextStep={this.nextStep}
                                           previousStep={this.previousStep}
                                           saveValues={this.saveValues}/>
@@ -94,7 +92,7 @@ export default class AddAppForm extends Component {
       <Step>
         <StepLabel>Frontend Analysis</StepLabel>
         <StepContent>
-          <FrontendAnalysisFieldset fieldValues={fieldValues}
+          <FrontendAnalysisFieldset fieldValues={this.fieldValues}
                                           nextStep={this.nextStep}
                                           previousStep={this.previousStep}
                                           saveValues={this.saveValues}/>
@@ -103,7 +101,7 @@ export default class AddAppForm extends Component {
       <Step>
         <StepLabel>Ultimo paso</StepLabel>
         <StepContent>
-          <LastStep fieldValues={fieldValues}
+          <LastStep fieldValues={this.fieldValues}
                         nextStep={this.nextStep}
                         previousStep={this.previousStep}
                         saveValues={this.saveValues}/>

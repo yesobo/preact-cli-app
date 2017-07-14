@@ -11,15 +11,26 @@ export default class RepoFieldset extends Component {
   constructor(props) {
     super(props);
 
-    this.fields = [ 'reponame', 'repourl', 'repotype' ]
-    this.fields.forEach( (fieldname) => this.state[fieldname] = null)
+    this.fields = [
+      'reponame',
+      'repourl',
+      'repotype' ]
+    
+    this.fields.forEach( (fieldname) =>
+      this.state[fieldname] =
+        this.props.fieldValues[fieldname]?this.props.fieldValues[fieldname]:null)
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
     this.saveAndContinue = this.saveAndContinue.bind(this);
     this.previousStep = this.previousStep.bind(this);
   }
 
-   handleInputChange(event) {
+  handleSelectChange(event, index, value) { 
+    this.setState({repotype: value}) 
+  };
+
+  handleInputChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -40,7 +51,6 @@ export default class RepoFieldset extends Component {
 
   previousStep(e) {
     e.preventDefault()
-
     this.props.previousStep();
   }
 
@@ -49,24 +59,26 @@ export default class RepoFieldset extends Component {
       <fieldset>
         <div className="form-group">
           <TextField
-            name="reponame"
+            name={this.fields[0]}
             hintText="Nombre del repositorio en Stash"
             floatingLabelText="Nombre"
+            onChange={this.handleInputChange}
           />
         </div>
         <div className="form-group">
           <TextField
-            name="repourl"
+            name={this.fields[1]}
             hintText="Url del repositorio Stash"
             floatingLabelText="Url"
+            onChange={this.handleInputChange}
           />
         </div>
         <div className="form-group">
             <SelectField
-              name="repotype"
-              value={this.state.repotype}
+              name={this.fields[2]}
+              value={this.state[this.fields[2]]}
               floatingLabelText="Tipo de repositorio"
-              onChange={this.handleChange}
+              onChange={this.handleSelectChange}
             >
               <MenuItem value='sub' primaryText="Subproceso/s" />
               <MenuItem value='view' primaryText="Vista/s" />

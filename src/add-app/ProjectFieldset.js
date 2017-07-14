@@ -12,7 +12,8 @@ export default class ProjectFieldset extends Component {
       'stashkey',
       'stashurl',
       'stashdescription' ]
-    this.fields.forEach( (fieldname) => this.state[fieldname] = null)
+    
+    this.fields.forEach( (fieldname) => this.state[fieldname] = this.props.fieldValues[fieldname]?this.props.fieldValues[fieldname]:null)
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.saveAndContinue = this.saveAndContinue.bind(this);
